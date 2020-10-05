@@ -36,4 +36,12 @@ class User extends \TCG\Voyager\Models\User
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function isSuperAdmin(){
+        return true;
+    }
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
 }

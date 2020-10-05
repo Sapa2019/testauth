@@ -15,6 +15,9 @@ class AfterMiddleware
      */
     public function handle($request, Closure $next)
     {
-        return $next($request);
+        $response = $next($request);
+        return $response ->header("X-Header-AfterMiddleware","This was created in our after middleware");
+
+//        return $next($request);
     }
 }
