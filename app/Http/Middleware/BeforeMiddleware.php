@@ -15,6 +15,9 @@ class BeforeMiddleware
      */
     public function handle($request, Closure $next)
     {
+        if(!$request->has('name')){
+            throw new \Exception('Hey Don\'t Worry');
+        }
         return $next($request);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,6 +26,20 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::middleware(['before','after'])->get('/',function(){
-   return response()->json(['hello'=>'world']);
+//Route::middleware(['before','after'])->get('/',function(){
+//   return response()->json(['hello'=>'world']);
+//});
+
+//Route::get('/home-dashboard','HomeController@dashboard');
+
+Route::middleware(['before','after'])->get('/example', function (Request $request){
+    return ['hello'=>'Hala Madrid'];
 });
+
+
+
+//Route::middleware('auth')->group(function(){
+//    Route::get('post','PostController@index')->name('post/index');
+//    Route::get('post/{post}','PostController@show')->name('post/show');
+//
+//});
