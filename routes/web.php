@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,9 +14,9 @@ use Illuminate\Support\Facades\Request;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
+Route::get('/', function () {
+    return view('welcome');
+});
 
 
 Route::group(['prefix' => 'admin'], function () {
@@ -24,7 +25,22 @@ Route::group(['prefix' => 'admin'], function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index');
+Route::post('/user','UserController@index');
+Route::get('/user1','UserController@index1');
+Route::post('/user2','UserController@index2');
+Route::post('/avatars','UserController@index2');
+Route::post('/book','BookController@store');
+Route::patch('/books/{book}','BookController@update');
+
+Route::get('/func',function(){
+   dd(SoGood('Sapa'));
+});
+Route::get('/pow',function(){
+    dd(PowNum(0));
+});
+
+//Route::get('/func','UserController@Func');
 
 //Route::middleware(['before','after'])->get('/',function(){
 //   return response()->json(['hello'=>'world']);
