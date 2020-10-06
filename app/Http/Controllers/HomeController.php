@@ -25,8 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+//        return response()->json(['Hi'=>'Shirmadov']);
         return response()->json(['Hi'=>'Shirmadov']);
-//        return view('home');
+        return view('home');
     }
 
     public function dashboard(){

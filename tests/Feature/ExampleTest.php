@@ -18,4 +18,18 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+
+//    public function testBasicExample()
+//    {
+//        $response = $this->withHeaders([
+//            'X-Header' => 'Value',
+//        ])->json('POST', '/user', ['name' => 'Sally']);
+//
+//        $response
+//            ->assertStatus(201)
+//            ->assertJson([
+//                'created' => true,
+//            ]);
+//    }
 }
