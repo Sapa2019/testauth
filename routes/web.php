@@ -32,6 +32,9 @@ Route::post('/user2','UserController@index2');
 Route::post('/avatars','UserController@index2');
 Route::post('/book','BookController@store');
 Route::patch('/books/{book}','BookController@update');
+Route::delete('/books/{book}','BookController@delete');
+
+Route::post('/author','AuthorController@store');
 
 Route::get('/func',function(){
    dd(SoGood('Sapa'));

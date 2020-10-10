@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Psy\Util\Str;
 
 class Book extends Model
 {
@@ -12,4 +13,8 @@ class Book extends Model
         'title',
         'author',
     ];
+
+    public function path(){
+        return '/books/'.$this->id;
+    }
 }
