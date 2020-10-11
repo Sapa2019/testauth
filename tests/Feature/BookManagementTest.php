@@ -17,10 +17,7 @@ class BookManagementTest extends TestCase
 
     public function testBasicExampleBook(){
 //        $this->withoutExceptionHandling();
-        $response = $this->post('/book',[
-            'title'=>'Cool Book Title',
-            'author'=>'Victor',
-        ]);
+        $response = $this->post('/book',$this->data());
 
         $book = Book::first();
 //        dd($book);
@@ -30,14 +27,17 @@ class BookManagementTest extends TestCase
     }
 
     public function testBookRequired(){
+        //Bu gornushde hem goyup bolya
+//        $res = $this->post('/book',[
+//            'title' =>'',
+//            'author_id'=>''
+//        ]);
 
-        $res = $this->post('/book',[
-            'title' =>'',
-            'author'=>''
-        ]);
 
-        $res->assertSessionHasErrors('title');
-        $res->assertSessionHasErrors('author');
+        $res = $this->post('/book',array_merge($this->data(),['title'=>'','author_id'=>'']));
+
+//        $res->assertSessionHasErrors('title');
+        $res->assertSessionHasErrors('author_id');
 
     }
 
@@ -45,10 +45,11 @@ class BookManagementTest extends TestCase
 //        $this->withoutExceptionHandling();
 
             //Bashda tablisa yazdyryas. Sebabi her funksiyanyn bashynda database'daki datalar ocurulyar
-            $response = $this->post('/book',[
-               'title'=>'Cool Book',
-               'author'=>'Victor',
-            ]);
+//            $response = $this->post('/book',[
+//               'title'=>'Cool Book',
+//               'author'=>'Victor',
+//            ]);
+            $response = $this->post('/book',$this->data());
 
             $book = Book::first();
 ////            $book->dumpSession();
@@ -56,10 +57,10 @@ class BookManagementTest extends TestCase
             //Sonra update edyas
             $response = $this->patch($book->path(),[
                 'title'=>'New Title1',
-                'author'=>'New Author',
+                'author_id'=>1,
             ]);
             $this->assertEquals('New Title1',Book::first()->title);
-            $this->assertEquals('New Author',Book::first()->author);
+            $this->assertEquals(5,Book::first()->author_id);
 
             //Controller'de redirect yazylyp yazylmadygyny bilip bolya ve yazylan redirect bilen deneshdiryas
 //            $response->assertRedirect('/books/'.$book->id);
@@ -72,10 +73,13 @@ class BookManagementTest extends TestCase
 
 //            $this->withoutExceptionHandling();
 
-            $this->post('/book',[
-                'title'=>'Cool Title Delete',
-                'author'=>'Victor delete',
-            ]);
+            //Bu gornushde hem goyup bolya. Emma kop gaytalayanlygy ucin ayratyn funksiya yazyldy
+//            $this->post('/book',[
+//                'title'=>'Cool Title Delete',
+//                'author'=>'Victor delete',
+//            ]);
+
+            $this->post('/book',$this->data());
 
             $book = Book::first();
             $this->assertCount(1,Book::all());
@@ -87,18 +91,34 @@ class BookManagementTest extends TestCase
             $response->assertRedirect('/book');
         }
 
-//        public function testBookAutoAdd(){
-//
-//            $this->post('/book',[
-//               'title'=>'Cool Title',
-//               'author'=>'Victor',
-//            ]);
-//
-//            $book = Book::first();
-//            $author = Author::first();
-//
-//            $this->assertCount(1,Author::all());
-//            $this->assertEquals($author->id,$book->author_id);
-//        }
+        public function testNewAuthorAutoAdd(){
+
+        $this->withoutExceptionHandling();
+            $this->post('/book',[
+               'title'=>'Cool Title',
+               'author_id'=>1,
+            ]);
+
+            $book = Book::first();
+            $author = Author::first();
+
+//            dd($book->author_id);
+//            $author->setAuthorAttribute('Sapa');
+            $this->assertEquals($author->id,$book->author_id);
+            $this->assertCount(1,Author::all());
+
+        }
+
+
+        private function data(){
+
+        return [
+            'title'=>'Cool Book Title',
+            'author_id'=>1,
+        ];
+
+        }
+
+
 
 }
